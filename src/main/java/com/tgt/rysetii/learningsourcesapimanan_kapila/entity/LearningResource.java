@@ -87,4 +87,18 @@ public class LearningResource {
     public void setRetiredDate(LocalDate retiredDate) {
         this.retiredDate = retiredDate;
     }
+
+    @Override
+    public String toString() {
+        return "LearningResource{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", costPrice=" + costPrice +
+                ", sellingPrice=" + sellingPrice +
+                ", productStatus=" + productStatus +
+                ", createdDate=" + createdDate +
+                ", publishedDate=" + publishedDate +
+                ", retiredDate=" + retiredDate +
+                "}\n";
+    }
 }
