@@ -42,7 +42,7 @@ public class LearningResourceService {
         Double resCostPrice = Double.parseDouble(columns[2]);
         Double resSellingPrice = Double.parseDouble(columns[3]);
         LearningResourceStatus resStats = LearningResourceStatus.valueOf(columns[4]);
-        //DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate resCreatedDate = LocalDate.parse(columns[5]);
         LocalDate resPublishDate = LocalDate.parse(columns[6]);
         LocalDate resRetiredDate = LocalDate.parse(columns[7]);
@@ -51,10 +51,43 @@ public class LearningResourceService {
                                                     resStats, resCreatedDate, resPublishDate, resRetiredDate);
         return res;
     }
+    public void saveLearningResources(List<LearningResource> list) {
+
+        try {
+            FileWriter storageFile = new FileWriter("LearningResourcesSaved.csv");
+            BufferedWriter writer = new BufferedWriter(storageFile);
+            for(LearningResource res : list) {
+                StringBuffer line = new StringBuffer();
+                writer.newLine();
+                line.append(res.getId());
+                line.append(",");
+                line.append(res.getName());
+                line.append(",");
+                line.append(res.getCostPrice());
+                line.append(",");
+                line.append(res.getSellingPrice());
+                line.append(",");
+                line.append(res.getProductStatus());
+                line.append(",");
+                line.append(res.getCreatedDate());
+                line.append(",");
+                line.append(res.getPublishedDate());
+                line.append(",");
+                line.append(res.getRetiredDate());
+                writer.write(line.toString());
+            }
+            System.out.println("Data written to file.");
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static void main(String[] args) {
         LearningResourceService service = new LearningResourceService();
         List<LearningResource> ll = service.getLearningResources();
         System.out.println("Output " + ll.toString());
+        service.saveLearningResources(ll);
     }
 }
 
