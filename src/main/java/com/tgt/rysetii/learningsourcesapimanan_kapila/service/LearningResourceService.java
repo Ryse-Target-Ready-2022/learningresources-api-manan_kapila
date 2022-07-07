@@ -7,12 +7,13 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class LearningResourceService {
     public List<LearningResource> getLearningResources() {
 
-        List<LearningResource> list = new ArrayList<LearningResource>();
+        List<LearningResource> list = new ArrayList<>();
         try {
             FileReader file = new FileReader("LearningResources.csv");
             BufferedReader in = new BufferedReader(file);
@@ -83,11 +84,33 @@ public class LearningResourceService {
             e.printStackTrace();
         }
     }
+    public List<Double> profitMargin() {
+        List<LearningResource> resList = getLearningResources();
+        List<Double> profits = new ArrayList<>();
+        for(LearningResource res : resList) {
+            profits.add((res.getSellingPrice()-res.getCostPrice())/res.getSellingPrice());
+        }
+        return profits;
+    }
+
+    public List<LearningResource> sortByProfitMargin(){
+        List<LearningResource> resList = getLearningResources();
+        resList.sort((lr1,lr2) -> {
+            Double pm1 = (lr1.getSellingPrice()-lr1.getCostPrice())/lr1.getCostPrice();
+            Double pm2 = (lr2.getSellingPrice()-lr2.getCostPrice())/lr2.getCostPrice();
+            return pm2.compareTo(pm1);
+        });
+        return resList;
+    }
     public static void main(String[] args) {
         LearningResourceService service = new LearningResourceService();
         List<LearningResource> ll = service.getLearningResources();
         System.out.println("Output " + ll.toString());
         service.saveLearningResources(ll);
+        List<Double> profitList = service.profitMargin();
+        System.out.println(profitList);
+        List<LearningResource> sortedList = service.sortByProfitMargin();
+        System.out.println(sortedList);
     }
 }
 
