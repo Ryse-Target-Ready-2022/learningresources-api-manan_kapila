@@ -1,15 +1,30 @@
 package com.tgt.rysetii.learningsourcesapimanan_kapila.entity;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class LearningResource {
+@Entity
+@Table(name = "learningresources")
+public class LearningResource implements Serializable {
+
+    @Id
+    @Column(name = "learning_resource_id")
     private Integer id;
+    @Column(name = "learning_resource_name")
     private String name;
+    @Column(name = "cost_price")
     private Double costPrice;
+    @Column(name = "selling_price")
     private Double sellingPrice;
+    @Column(name = "learning_resource_status")
+    @Enumerated(EnumType.STRING)
     private LearningResourceStatus productStatus;
+    @Column(name = "created_date")
     private LocalDate createdDate;
+    @Column(name = "published_date")
     private LocalDate publishedDate;
+    @Column(name = "retired_date")
     private LocalDate retiredDate;
 
     public LearningResource(Integer id, String name, Double costPrice, Double sellingPrice, LearningResourceStatus productStatus,
@@ -99,6 +114,6 @@ public class LearningResource {
                 ", createdDate=" + createdDate +
                 ", publishedDate=" + publishedDate +
                 ", retiredDate=" + retiredDate +
-                "}\n";
+                "}";
     }
 }
