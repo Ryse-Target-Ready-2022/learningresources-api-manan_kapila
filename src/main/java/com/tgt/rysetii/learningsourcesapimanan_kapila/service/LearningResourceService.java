@@ -2,16 +2,36 @@ package com.tgt.rysetii.learningsourcesapimanan_kapila.service;
 
 import com.tgt.rysetii.learningsourcesapimanan_kapila.entity.LearningResource;
 import com.tgt.rysetii.learningsourcesapimanan_kapila.entity.LearningResourceStatus;
+import com.tgt.rysetii.learningsourcesapimanan_kapila.repository.LearningResourceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
+@Service
 public class LearningResourceService {
-    public List<LearningResource> getLearningResources() {
+
+   private LearningResourceRepository learningResourceRepository;
+
+    public LearningResourceService(LearningResourceRepository learningResourceRepository) {
+        this.learningResourceRepository = learningResourceRepository;
+    }
+
+    public void saveResource(List<LearningResource> resources) {
+        for(LearningResource resource : resources){
+            learningResourceRepository.save(resource);
+        }
+    }
+
+    public List<LearningResource> getResources(){
+        return learningResourceRepository.findAll();
+    }
+
+    public List<LearningResource> getLearningResourcesFromFile() {
 
         List<LearningResource> list = new ArrayList<>();
         try {
@@ -85,7 +105,7 @@ public class LearningResourceService {
         }
     }
     public List<Double> profitMargin() {
-        List<LearningResource> resList = getLearningResources();
+        List<LearningResource> resList = getResources();
         List<Double> profits = new ArrayList<>();
         for(LearningResource res : resList) {
             profits.add((res.getSellingPrice()-res.getCostPrice())/res.getSellingPrice());
@@ -94,7 +114,7 @@ public class LearningResourceService {
     }
 
     public List<LearningResource> sortByProfitMargin(){
-        List<LearningResource> resList = getLearningResources();
+        List<LearningResource> resList = getResources();
         resList.sort((lr1,lr2) -> {
             Double pm1 = (lr1.getSellingPrice()-lr1.getCostPrice())/lr1.getCostPrice();
             Double pm2 = (lr2.getSellingPrice()-lr2.getCostPrice())/lr2.getCostPrice();
@@ -102,15 +122,17 @@ public class LearningResourceService {
         });
         return resList;
     }
-    public static void main(String[] args) {
-        LearningResourceService service = new LearningResourceService();
-        List<LearningResource> ll = service.getLearningResources();
-        System.out.println("Output " + ll.toString());
-        service.saveLearningResources(ll);
-        List<Double> profitList = service.profitMargin();
-        System.out.println(profitList);
-        List<LearningResource> sortedList = service.sortByProfitMargin();
-        System.out.println(sortedList);
-    }
+//    public static void main(String[] args) {
+//        LearningResourceService service = new LearningResourceService();
+//        List<LearningResource> ll = service.getLearningResources();
+//        System.out.println("Output " + ll.toString());
+//        service.saveLearningResources(ll);
+//        List<Double> profitList = service.profitMargin();
+//        System.out.println(profitList);
+//        List<LearningResource> sortedList = service.sortByProfitMargin();
+//        System.out.println(sortedList);
+//        LearningResource outRes = service.getResById(1);
+//        System.out.println(outRes);
+//    }
 }
 
