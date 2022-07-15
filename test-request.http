@@ -1,0 +1,51 @@
+GET /learningresources
+Host: localhost:8080
+Accept: application/json
+
+###
+
+POST /learningresources
+Host: localhost:8080
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "Basics of Computer Vision",
+    "costPrice": 799.0,
+    "sellingPrice": 899.0,
+    "productStatus": "PUBLISHED",
+    "createdDate": "2021-11-07",
+    "publishedDate": "2022-01-02",
+    "retiredDate": "2027-01-02"
+  },
+###
+
+POST /learningresources/list
+Host: localhost:8080
+Content-Type: application/json
+Accept: application/json
+
+[
+  {
+      "name": "Advanced DevOps",
+      "costPrice": 799.0,
+      "sellingPrice": 1199.0,
+      "productStatus": "PUBLISHED",
+      "createdDate": "2021-11-07",
+      "publishedDate": "2022-01-02",
+      "retiredDate": "2025-01-02"
+  },
+  {  
+      "name": "Basics of ML",
+      "costPrice": 499.0,
+      "sellingPrice": 599.0,
+      "productStatus": "LIVE",
+      "createdDate": "2021-11-07",
+      "publishedDate": "2022-01-02",
+      "retiredDate": "2025-01-02"
+  }
+]
+###
+
+DELETE /learningresources/10
+Host: localhost:8080
