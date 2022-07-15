@@ -10,6 +10,7 @@ public class LearningResource implements Serializable {
 
     @Id
     @Column(name = "learning_resource_id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "learning_resource_name")
     private String name;
@@ -27,9 +28,11 @@ public class LearningResource implements Serializable {
     @Column(name = "retired_date")
     private LocalDate retiredDate;
 
-    public LearningResource(Integer id, String name, Double costPrice, Double sellingPrice, LearningResourceStatus productStatus,
+    public LearningResource(){
+    }
+
+    public LearningResource(String name, Double costPrice, Double sellingPrice, LearningResourceStatus productStatus,
                             LocalDate createdDate, LocalDate publishedDate, LocalDate retiredDate) {
-        this.id = id;
         this.name = name;
         this.costPrice = costPrice;
         this.sellingPrice = sellingPrice;
@@ -39,7 +42,7 @@ public class LearningResource implements Serializable {
         this.retiredDate = retiredDate;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
