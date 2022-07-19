@@ -1,17 +1,11 @@
 package com.tgt.rysetii.learningsourcesapimanan_kapila.service;
 
 import com.tgt.rysetii.learningsourcesapimanan_kapila.entity.LearningResource;
-import com.tgt.rysetii.learningsourcesapimanan_kapila.entity.LearningResourceStatus;
 import com.tgt.rysetii.learningsourcesapimanan_kapila.repository.LearningResourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.io.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,10 +43,10 @@ public class LearningResourceService {
 
 
     public void deleteResourceById(int id){
-        learningResourceRepository.deleteAllById(Collections.singleton(id));
+        learningResourceRepository.deleteById(id);
     }
 
-    public List<Double> profitMargin() {
+    public List<Double> getProfitMargin() {
         List<LearningResource> resList = getResources();
         List<Double> profits = new ArrayList<>();
         for(LearningResource res : resList) {
