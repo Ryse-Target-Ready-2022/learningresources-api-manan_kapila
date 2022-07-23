@@ -67,7 +67,7 @@ class LearningResourceServiceTests {
     }
 
     @Test
-    void saveLearningResource(){
+    void saveListLearningResource(){
         List<LearningResource> learningResourceList = new ArrayList<>();
         LearningResource learningResource1 = new LearningResource("Test 1", 100.0, 300.0, LearningResourceStatus.LIVE, LocalDate.now(), LocalDate.now().plusMonths(3), LocalDate.now().plusYears(5));
         LearningResource learningResource2 = new LearningResource("Test 2", 200.0, 300.0, LearningResourceStatus.LIVE, LocalDate.now(), LocalDate.now().plusMonths(4), LocalDate.now().plusYears(4));
@@ -79,6 +79,13 @@ class LearningResourceServiceTests {
         learningResourceService.saveMultipleResource(learningResourceList);
 
         verify(learningResourceRepository,times(learningResourceList.size())).save(any(LearningResource.class));
+    }
+
+    @Test
+    void saveOneResourceTest(){
+        LearningResource learningResource1 = new LearningResource("Test 1", 100.0, 300.0, LearningResourceStatus.LIVE, LocalDate.now(), LocalDate.now().plusMonths(3), LocalDate.now().plusYears(5));
+        learningResourceService.saveOneResource(learningResource1);
+        verify(learningResourceRepository).save(any(LearningResource.class));
     }
 
     @Test
